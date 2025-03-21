@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://wallpapers.com/images/hd/green-aesthetic-5k-desktop-7ndwd7wo0nlxzwi8.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: rgba(76, 175, 80, 0.9);
+            padding: 20px;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin: 20px 0;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+        }
+
+        .navbar ul li.active a {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .header-banner {
+            margin-left: 220px;
+            /* Leave space for navbar */
+            background-color: rgba(76, 175, 80, 0.8);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 0.5s;
+        }
+
+        .description-banner {
+            margin-left: 240px;
+            /* Leave space for navbar */
+            background-color: rgba(244, 244, 244, 0.9);
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1s;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        p {
+            max-width: 600px;
+            margin: 20px auto;
+            line-height: 1.5;
+        }
+
+        .take-test-btn {
+            background-color: #45d164;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.5s;
+        }
+
+        .take-test-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .statistics-images {
+            display: flex;
+            justify-content: center;
+            /* Center the images horizontally */
+            flex-wrap: wrap;
+            /* Allow wrapping to the next line */
+            margin-top: 20px;
+            /* Space above the images */
+        }
+
+        .statistics-images img {
+            margin: 10px;
+            /* Space between images */
+            border-radius: 8px;
+            /* Rounded corners for images */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            max-width: 100%;
+            /* Ensures images are responsive */
+            height: auto;
+            /* Maintain aspect ratio */
+            width: calc(33% - 20px);
+            /* Adjusts width for three images in a row */
+        }
+
+        /* Container styling for each question */
+        .question-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Styling for the labels */
+        .question-container label {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Styling for text areas (input boxes) */
+        .question-container textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Generate Results button styling */
+        .generate-results-btn {
+            background-color: #45d164;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+
+        /* Hover effect for the Generate Results button */
+        .generate-results-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('more-info')">More Info</a></li>
+            <li><a href="#" onclick="showPage('take-test')">Take Test</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page Section -->
+    <section id="home" class="page" {% if active_page !='home' %}style="display: none;" {% endif %}>
+        <header class="header-banner">
+            <h1>Welcome to Mental Health Predictor</h1>
+        </header>
+        <section class="description-banner">
+            <p>
+                Depression is a common illness worldwide, with more than 300 million people affected.
+                India is home to an estimated 57 million people (18% of the global estimate) affected by depression.
+            </p>
+            <button class="take-test-btn" onclick="showPage('take-test')">Take Test</button>
+        </section>
+    </section>
+
+    <!-- More Info Section -->
+    <section id="more-info" class="page" {% if active_page !='more-info' %}style="display: none;" {% endif %}>
+        <header class="header-banner">
+            <h1>Depression Statistics Worldwide</h1>
+        </header>
+        <section class="description-banner">
+            <p>
+                Depression is a major contributor to the global burden of disease.
+            </p>
+            <ul>
+                <li>More than 264 million people are affected by depression globally.</li>
+                <li>Depression is the leading cause of disability worldwide.</li>
+                <li>Suicide is the second leading cause of death among 15-29 year-olds.</li>
+                <li>Women are more likely than men to experience depression.</li>
+            </ul>
+            <h2>Visual Statistics</h2>
+            <div class="statistics-images">
+                <img src="https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-022-12952-5/MediaObjects/41598_2022_12952_Fig1_HTML.png"
+                    alt="Global Depression Rates">
+                <img src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdd98e4d4-33d5-498f-b6ef-45643813f4f9_900x750.png"
+                    alt="Depression by Age Group">
+                <img src="https://cdn.statcdn.com/Infographic/images/normal/19262.jpeg" alt="Impact of Depression">
+            </div>
+        </section>
+    </section>
+
+    <!-- Take Test Section -->
+    <section id="take-test" class="page" {% if active_page !='take-test' %}style="display: none;" {% endif %}>
+        <header class="header-banner">
+            <h1>Mental Health Assessment</h1>
+        </header>
+        <section class="description-banner">
+            <form class="test-form" action="/predict" method="POST">
+                <!-- Container for first question -->
+                <div class="question-container">
+                    <label for="feeling">1. How have you been feeling lately? Describe it:</label>
+                    <textarea id="feeling" name="feeling" rows="6" required></textarea>
+                </div>
+                <!-- Container for second question -->
+                <div class="question-container">
+                    <label for="life">2. How do you feel about your life?</label>
+                    <textarea id="life" name="life" rows="6" required></textarea>
+                </div>
+                <!-- Container for third question -->
+                <div class="question-container">
+                    <label for="energy">3. How would you describe your energy levels lately?</label>
+                    <textarea id="energy" name="energy" rows="6" required></textarea>
+                </div>
+                <!-- Container for fourth question -->
+                <div class="question-container">
+                    <label for="sleep">4. Describe any changes you have noticed in your sleep pattern:</label>
+                    <textarea id="sleep" name="sleep" rows="6" required></textarea>
+                </div>
+                <!-- Container for fifth question -->
+                <div class="question-container">
+                    <label for="thoughts">5. What thoughts or emotions tend to come up for you when you are
+                        alone?</label>
+                    <textarea id="thoughts" name="thoughts" rows="6" required></textarea>
+                </div>
+                <!-- Container for sixth question -->
+                <div class="question-container">
+                    <label for="physical_changes">6. Describe any physical changes you have noticed, like appetite or
+                        weight:</label>
+                    <textarea id="physical_changes" name="physical_changes" rows="6" required></textarea>
+                </div>
+
+                <!-- Generate Results button -->
+                <button class="generate-results-btn" type="submit">Generate Results</button>
+            </form>
+
+            {% if result %}
+            <div class="result-section">
+                <h2>Prediction: {{ result }}</h2>
+            </div>
+            {% endif %}
+
+        </section>
+    </section>
+
+    <script>
+        // Function to show a specific page and hide others
+        function showPage(pageId) {
+            var pages = document.querySelectorAll('.page');
+            pages.forEach(function (page) {
+                page.style.display = 'none';  // Hide all pages
+            });
+
+            // Show the selected page
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        // Initially show the Home page
+        window.onload = function () {
+            showPage('{{ active_page or "home" }}');
+        };
+    </script>
+
+</body>
+
+</html>
